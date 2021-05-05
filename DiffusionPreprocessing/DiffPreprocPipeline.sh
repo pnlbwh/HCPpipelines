@@ -544,6 +544,8 @@ main() {
 	log_Msg "eddy_cmd: ${eddy_cmd}"
 	${eddy_cmd}
 
+    exit
+
 	log_Msg "Invoking Post-Eddy Steps"
 	local post_eddy_cmd=""
 	post_eddy_cmd+="${HCPPIPEDIR}/DiffusionPreprocessing/DiffPreprocPipeline_PostEddy.sh "
