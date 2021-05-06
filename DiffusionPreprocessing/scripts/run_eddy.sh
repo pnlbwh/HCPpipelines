@@ -612,6 +612,10 @@ main() {
 			eddy_command+=" ${extra_eddy_arg} "
 		done
 	fi
+    
+    # TODO eddy with differential --repol flag
+    # it might be the best to hand off the whole process to a python script
+    # derived from fsl_topup_epi_eddy
 
 	log_Msg "About to issue the following eddy command: "
 	log_Msg "${eddy_command}"
