@@ -42,8 +42,8 @@ def main():
         # replace --outPrefix
         eddy_openmp_params[outPrefixInd]= f'--out={wo_repol_outPrefix}'
         cmd= ' '.join(eddy_openmp_params)
-        # p= Popen(cmd, shell=True)
-        # p.wait()
+        p= Popen(cmd, shell=True)
+        p.wait()
         
         repol_bvecs = np.array(read_bvecs(outPrefix + '.eddy_rotated_bvecs'))
         wo_repol_bvecs = np.array(read_bvecs(wo_repol_outPrefix + '.eddy_rotated_bvecs'))
