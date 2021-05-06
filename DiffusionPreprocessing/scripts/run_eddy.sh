@@ -633,7 +633,8 @@ main() {
                 
                 log_Msg "Completed with return value: ${eddyReturnValue}"
                 exit ${eddyReturnValue}
-		done
+		    fi
+        done
 	fi
 }
 
