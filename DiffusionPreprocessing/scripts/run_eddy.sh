@@ -613,10 +613,6 @@ main() {
 		done
 	fi
     
-    # TODO eddy with differential --repol flag
-    # it might be the best to hand off the whole process to a python script
-    # derived from fsl_topup_epi_eddy
-
 	log_Msg "About to issue the following eddy command: "
 	log_Msg "${eddy_command}"
 	${eddy_command}
@@ -624,6 +620,21 @@ main() {
 
 	log_Msg "Completed with return value: ${eddyReturnValue}"
 	exit ${eddyReturnValue}
+    
+    # Redoing eddy without --repol flag to obtain not outlier replaced <=500 bshell
+    if [ ! -z "${extra_eddy_args}" ]; then
+		for extra_eddy_arg in ${extra_eddy_args}; do
+			if [ extra_eddy_arg=='--repol' ]; then
+                log_Msg "Redoing eddy without --repol flag to obtain not outlier replaced <=500 bshell"
+                eddy_command= "${HCPPIPEDIR}/DiffusionPreprocessing/scripts/eddy_pnl_repol.py ${eddy_command}"
+                log_Msg "${eddy_command}"
+                ${eddy_command}
+                eddyReturnValue=$?
+                
+                log_Msg "Completed with return value: ${eddyReturnValue}"
+                exit ${eddyReturnValue}
+		done
+	fi
 }
 
 # ------------------------------------------------------------------------------
