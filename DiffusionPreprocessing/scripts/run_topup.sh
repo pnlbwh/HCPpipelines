@@ -28,8 +28,19 @@ fi
 ${FSLDIR}/bin/imrm ${workingdir}/Pos_b0*
 ${FSLDIR}/bin/imrm ${workingdir}/Neg_b0*
 
+: << comment
 echo "Running BET on the hifi b0"
 ${FSLDIR}/bin/bet ${workingdir}/hifib0 ${workingdir}/nodif_brain -m -f 0.2
+comment
+
+cnn_mask_exe=`which dwi_masking.py`
+if [ ! -z $cnn_mask_exe ]; then
+    echo "CNN-Diffusion-MRIBrain-Segmentation/pipeline/dwi_masking.py is not available in PATH"
+    exit 1
+fi
+
+# TODO
+$cnn_mask_exe -i ${workingdir}/hifib0 -f $(dirname $cnn_mask_exe)/../model_folder -o ${workingdir}/nodif_brain
 
 if [ ! -f ${workingdir}/nodif_brain.nii.gz ]; then
 	echo "run_topup.sh -- ERROR -- ${FSLDIR}/bin/bet failed to generate ${workingdir}/nodif_brain.nii.gz"
