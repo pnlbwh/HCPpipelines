@@ -14,36 +14,33 @@ ${FSLDIR}/bin/topup --imain=${workingdir}/Pos_Neg_b0 --datain=${workingdir}/acqp
 dimt=$(${FSLDIR}/bin/fslval ${workingdir}/Pos_b0 dim4)
 dimt=$((${dimt} + 1))
 
-: << comment
-echo "Applying topup to get a hifi b0"
-${FSLDIR}/bin/fslroi ${workingdir}/Pos_b0 ${workingdir}/Pos_b01 0 1
-${FSLDIR}/bin/fslroi ${workingdir}/Neg_b0 ${workingdir}/Neg_b01 0 1
-${FSLDIR}/bin/applytopup --imain=${workingdir}/Pos_b01,${workingdir}/Neg_b01 --topup=${workingdir}/topup_Pos_Neg_b0 --datain=${workingdir}/acqparams.txt --inindex=1,${dimt} --out=${workingdir}/hifib0
+# echo "Applying topup to get a hifi b0"
+# ${FSLDIR}/bin/fslroi ${workingdir}/Pos_b0 ${workingdir}/Pos_b01 0 1
+# ${FSLDIR}/bin/fslroi ${workingdir}/Neg_b0 ${workingdir}/Neg_b01 0 1
+# ${FSLDIR}/bin/applytopup --imain=${workingdir}/Pos_b01,${workingdir}/Neg_b01 --topup=${workingdir}/topup_Pos_Neg_b0 --datain=${workingdir}/acqparams.txt --inindex=1,${dimt} --out=${workingdir}/hifib0
+# 
+# if [ ! -f ${workingdir}/hifib0.nii.gz ]; then
+# 	echo "run_topup.sh -- ERROR -- ${FSLDIR}/bin/applytopup failed to generate ${workingdir}/hifib0.nii.gz"
+# 	# Need to add mechanism whereby scripts that invoke this script (run_topup.sh)
+# 	# check for a return code to determine success or failure
+# fi
 
-if [ ! -f ${workingdir}/hifib0.nii.gz ]; then
-	echo "run_topup.sh -- ERROR -- ${FSLDIR}/bin/applytopup failed to generate ${workingdir}/hifib0.nii.gz"
-	# Need to add mechanism whereby scripts that invoke this script (run_topup.sh)
-	# check for a return code to determine success or failure
-fi
-comment
 
 ${FSLDIR}/bin/imrm ${workingdir}/Pos_b0*
 ${FSLDIR}/bin/imrm ${workingdir}/Neg_b0*
-
-: << comment
-echo "Running BET on the hifi b0"
-${FSLDIR}/bin/bet ${workingdir}/hifib0 ${workingdir}/nodif_brain -m -f 0.2
-
-
-cnn_mask_exe=`which dwi_masking.py`
-if [ ! -z $cnn_mask_exe ]; then
-    echo "CNN-Diffusion-MRIBrain-Segmentation/pipeline/dwi_masking.py is not available in PATH"
-    exit 1
-fi
-
-# TODO
-$cnn_mask_exe -i ${workingdir}/hifib0 -f $(dirname $cnn_mask_exe)/../model_folder -o ${workingdir}/nodif_brain
-comment
+ 
+# echo "Running BET on the hifi b0"
+# ${FSLDIR}/bin/bet ${workingdir}/hifib0 ${workingdir}/nodif_brain -m -f 0.2
+ 
+# echo "Applying PNL invented CNN masking tool to obtain b0 brain mask"
+# cnn_mask_exe=`which dwi_masking.py`
+# if [ ! -z $cnn_mask_exe ]; then
+#     echo "CNN-Diffusion-MRIBrain-Segmentation/pipeline/dwi_masking.py is not available in PATH"
+#     exit 1
+# fi
+# 
+# # TODO
+# $cnn_mask_exe -i ${workingdir}/hifib0 -f $(dirname $cnn_mask_exe)/../model_folder -o ${workingdir}/nodif_brain
 
 
 # define the masks in PA,AP order (pos,neg)
