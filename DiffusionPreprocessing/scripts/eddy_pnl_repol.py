@@ -9,7 +9,20 @@ from subprocess import Popen
 import sys
 from plumbum import local
 from os.path import join as pjoin, basename
-from nibabel import load
+from nibabel import load, Nifti1Image
+
+# taken from https://github.com/pnlbwh/pnlNipype/blob/415b110edf99c13a2a70ffc2600add7231fb30ee/scripts/util.py#L34
+def save_nifti(fname, data, affine, hdr=None):
+    if data.dtype.name=='uint8':
+        hdr.set_data_dtype('uint8')
+    elif data.dtype.name=='int16':
+        hdr.set_data_dtype('int16')
+    else:
+        hdr.set_data_dtype('float32')
+
+    result_img = Nifti1Image(data, affine, header=hdr)
+    result_img.to_filename(fname)
+    
 
 def main(): 
     
