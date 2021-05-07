@@ -30,13 +30,13 @@ comment
 ${FSLDIR}/bin/imrm ${workingdir}/Pos_b0*
 ${FSLDIR}/bin/imrm ${workingdir}/Neg_b0*
 
-: <<comment
+: << comment
 echo "Running BET on the hifi b0"
 ${FSLDIR}/bin/bet ${workingdir}/hifib0 ${workingdir}/nodif_brain -m -f 0.2
 
 
 cnn_mask_exe=`which dwi_masking.py`
-if [ -z $cnn_mask_exe ]; then
+if [ ! -z $cnn_mask_exe ]; then
     echo "CNN-Diffusion-MRIBrain-Segmentation/pipeline/dwi_masking.py is not available in PATH"
     exit 1
 fi
@@ -61,8 +61,8 @@ cd ${workingdir}
 
 fslmaths mask_107 -abs mask_107
 fslmaths mask_99 -abs mask_99
-fslmaths mask_107 -add mask_99 nodif_brain -odt char
-fslmaths nodif_brain -bin nodif_brain
+fslmaths mask_107 -add mask_99 nodif_brain_mask -odt char
+fslmaths nodif_brain_mask -bin nodif_brain_mask
 
 # filter the resultant mask
 if [ -z `which maskfilter.py` ]; then
@@ -72,7 +72,7 @@ fi
 # maskfilter.py nodif_brain.nii.gz 2 nodif_brain.nii.gz
 
 ${FSLDIR}/bin/imrm ${workingdir}/mask_107
-${FSLDIR}/bin/imrm ${workingdir}/mask_99*
+${FSLDIR}/bin/imrm ${workingdir}/mask_99
 
 popd
 
