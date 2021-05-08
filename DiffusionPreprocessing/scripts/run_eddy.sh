@@ -619,6 +619,10 @@ main() {
 	eddyReturnValue=$?
 	log_Msg "Completed with return value: ${eddyReturnValue}"
     
+    # remove unnecessary eddy_unwarped_images.eddy_outlier_free_data.nii.gz created with --repol
+    # this removal should reduce the space by half
+    ${FSLDIR}/bin/imrm ${workingdir}/eddy_unwarped_images.eddy_outlier_free_data
+     
     # Redoing eddy without --repol flag to obtain not outlier replaced <=500 bshell
     if [ ! -z "${extra_eddy_args}" ]; then
 		for extra_eddy_arg in ${extra_eddy_args}; do
