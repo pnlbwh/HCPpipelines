@@ -46,11 +46,11 @@ ${FSLDIR}/bin/imrm ${workingdir}/Neg_b0*
 # define the masks in PA,AP order (pos,neg)
 # obtain 107 masks
 IFS=' ' read -ra masks_107 <<< $MASKS_107
-${FSLDIR}/bin/applytopup --imain=${masks_107[0]},${masks_107[1]} --topup=${workingdir}/topup_Pos_Neg_b0 --datain=${workingdir}/acqparams.txt --inindex=1,${dimt} --out=${workingdir}/mask_107 --verbose
+${FSLDIR}/bin/applytopup --imain=${masks_107[0]},${masks_107[1]} --topup=${workingdir}/topup_Pos_Neg_b0 --datain=${workingdir}/acqparams.txt --inindex=1,${dimt} --out=${workingdir}/mask_107 --verbose --method=jac --interp=trilinear
 
 # obtain 99 masks
 IFS=' ' read -ra masks_99 <<< $MASKS_99
-${FSLDIR}/bin/applytopup --imain=${masks_99[0]},${masks_99[1]} --topup=${workingdir}/topup_Pos_Neg_b0 --datain=${workingdir}/acqparams.txt --inindex=1,${dimt} --out=${workingdir}/mask_99 --verbose
+${FSLDIR}/bin/applytopup --imain=${masks_99[0]},${masks_99[1]} --topup=${workingdir}/topup_Pos_Neg_b0 --datain=${workingdir}/acqparams.txt --inindex=1,${dimt} --out=${workingdir}/mask_99 --verbose --method=jac --interp=trilinear
 
 # take their union
 pushd .
