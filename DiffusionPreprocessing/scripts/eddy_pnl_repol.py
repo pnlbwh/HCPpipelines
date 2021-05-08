@@ -5,7 +5,7 @@ from conversion import read_bvals, read_bvecs, write_bvals, write_bvecs
 from shutil import copyfile
 REPOL_BSHELL_GREATER= 550
 B0_THRESHOLD= 50
-from subprocess import Popen
+from subprocess import Popen, check_call
 import sys
 from plumbum import local
 from os.path import join as pjoin, basename
@@ -73,8 +73,11 @@ def main():
 
         # overwrite completely repol corrected bvecs
         write_bvecs(outPrefix + '.eddy_rotated_bvecs', merged_bvecs)
-
-
+        
+        # clean up
+        check_call(f'rm -r {wo_repol_outDir}', shell=True)
+        
+        
 if __name__=='__main__':
     main()
 
