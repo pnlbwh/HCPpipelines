@@ -626,12 +626,16 @@ main() {
     # remove rawdata and release space
     rm -r ${workingdir}/../rawdata
     
+    # remove intensity normalized data
+    # rm ${workingdir}/Pos*
+    # rm ${workingdir}/Neg*
+     
     # Redoing eddy without --repol flag to obtain not outlier replaced <=500 bshell
     if [ ! -z "${extra_eddy_args}" ]; then
 		for extra_eddy_arg in ${extra_eddy_args}; do
 
 			if [ $extra_eddy_arg = '--repol' ]; then
-                log_Msg "Redoing eddy without --repol flag to obtain not outlier replaced <=500 bshell"
+                log_Msg "Redoing eddy without --repol flag to obtain not outlier replaced b<=500 shells"
                 eddy_command="${HCPPIPEDIR}/DiffusionPreprocessing/scripts/eddy_pnl_repol.py ${eddy_command}"
                 log_Msg "${eddy_command}"
                 ${eddy_command}
