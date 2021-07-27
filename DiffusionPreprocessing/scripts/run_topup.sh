@@ -34,7 +34,7 @@ ${FSLDIR}/bin/imrm ${workingdir}/Neg_b0*
  
 # echo "Applying PNL invented CNN masking tool to obtain b0 brain mask"
 # cnn_mask_exe=`which dwi_masking.py`
-# if [ ! -z $cnn_mask_exe ]; then
+# if [ -z $cnn_mask_exe ]; then
 #     echo "CNN-Diffusion-MRIBrain-Segmentation/pipeline/dwi_masking.py is not available in PATH"
 #     exit 1
 # fi
