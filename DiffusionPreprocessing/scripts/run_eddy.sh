@@ -627,8 +627,8 @@ main() {
     rm -r ${workingdir}/../rawdata
     
     # remove intensity normalized data
-    # rm ${workingdir}/Pos*
-    # rm ${workingdir}/Neg*
+    rm ${workingdir}/Pos*
+    rm ${workingdir}/Neg*
      
     # Redoing eddy without --repol flag to obtain not outlier replaced <=500 bshell
     if [ ! -z "${extra_eddy_args}" ]; then
