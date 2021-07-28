@@ -39,7 +39,18 @@ if [ -z $cnn_mask_exe ]; then
     exit 1
 fi
 
-$cnn_mask_exe -i ${workingdir}/hifib0 -f $(dirname $cnn_mask_exe)/../model_folder -o ${workingdir}/nodif_brain
+pushd .
+cd ${workingdir}
+listpre=b0_list
+realpath hifib0.nii.gz > ${listpre}.txt
+$cnn_mask_exe -i ${listpre}.txt -f $(dirname $cnn_mask_exe)/../model_folder
+# rename
+mv hifib0_bse-multi_BrainMask.nii.gz nodif_brain_mask.nii.gz
+# cleanup
+rm ${listpre}*
+rm *_cases_*
+rm -r slicesdir_multi/
+popd
 
 
 if [ ! -f ${workingdir}/nodif_brain.nii.gz ]; then
