@@ -635,7 +635,7 @@ main() {
 	    for extra_eddy_arg in ${extra_eddy_args}; do
 
 		if [ $extra_eddy_arg = '--repol' ]; then
-                    log_Msg "Redoing eddy without --repol flag to obtain not outlier replaced b<=500 shells"
+                    log_Msg "Redoing eddy without --repol flag to obtain not outlier replaced b<=550 shells"
                     eddy_command="${HCPPIPEDIR}/DiffusionPreprocessing/scripts/eddy_pnl_repol.py ${eddy_command}"
                     log_Msg "${eddy_command}"
                     ${eddy_command}
