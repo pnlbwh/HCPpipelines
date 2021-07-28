@@ -626,10 +626,6 @@ main() {
     # remove rawdata and release space
     rm -r ${workingdir}/../rawdata
     
-    # remove intensity normalized data
-    rm ${workingdir}/Pos*
-    rm ${workingdir}/Neg*
-     
     # Redoing eddy without --repol flag to obtain not outlier replaced <=500 bshell
     if [ ! -z "${extra_eddy_args}" ]; then
 	    for extra_eddy_arg in ${extra_eddy_args}; do
@@ -645,6 +641,9 @@ main() {
 
             done
     fi
+
+    # remove intensity normalized data
+    rm ${workingdir}/Pos_Neg.nii.gz
 
     exit ${eddyReturnValue}
 
