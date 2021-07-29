@@ -544,6 +544,14 @@ main() {
 	log_Msg "eddy_cmd: ${eddy_cmd}"
 	${eddy_cmd}
 
+       echo """
+       Observe the following output files in ${StudyFolder}/${Subject}:
+       dwi:   Diffusion/eddy/eddy_unwarped_images.nii.gz
+       bvals: Diffusion/eddy/Pos_Neg.bvals
+       bvecs: Diffusion/eddy/eddy_unwarped_images.eddy_rotated_bvecs
+       mask:  Diffusion/eddy/nodif_brain_mask.nii.gz
+       """
+
     exit
 
 	log_Msg "Invoking Post-Eddy Steps"
