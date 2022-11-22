@@ -53,8 +53,8 @@ rm -r slicesdir_multi/
 popd
 
 
-if [ ! -f ${workingdir}/nodif_brain.nii.gz ]; then
-	echo "run_topup.sh -- ERROR -- CNN-Diffusion-MRIBrain-Segmentation/pipeline/dwi_masking.py failed to generate ${workingdir}/nodif_brain.nii.gz"
+if [ ! -f ${workingdir}/nodif_brain_mask.nii.gz ]; then
+	echo "run_topup.sh -- ERROR -- CNN-Diffusion-MRIBrain-Segmentation/pipeline/dwi_masking.py failed to generate ${workingdir}/nodif_brain_mask.nii.gz"
 	# Need to add mechanism whereby scripts that invoke this script (run_topup.sh)
 	# check for a return code to determine success or failure
 fi
