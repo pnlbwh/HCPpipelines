@@ -612,14 +612,41 @@ main() {
 			eddy_command+=" ${extra_eddy_arg} "
 		done
 	fi
-
+    
 	log_Msg "About to issue the following eddy command: "
 	log_Msg "${eddy_command}"
 	${eddy_command}
 	eddyReturnValue=$?
-
 	log_Msg "Completed with return value: ${eddyReturnValue}"
-	exit ${eddyReturnValue}
+    
+    # remove unnecessary eddy_unwarped_images.eddy_outlier_free_data.nii.gz created with --repol
+    # this removal should reduce the space by half
+    ${FSLDIR}/bin/imrm ${workingdir}/eddy_unwarped_images.eddy_outlier_free_data
+    
+    # remove rawdata and release space
+    rm -r ${workingdir}/../rawdata
+    
+    # Redoing eddy without --repol flag to obtain not outlier replaced <=500 bshell
+    if [ ! -z "${extra_eddy_args}" ]; then
+	    for extra_eddy_arg in ${extra_eddy_args}; do
+
+		if [ $extra_eddy_arg = '--repol' ]; then
+                    log_Msg "Redoing eddy without --repol flag to obtain not outlier replaced b<=550 shells"
+                    eddy_command="${HCPPIPEDIR}/DiffusionPreprocessing/scripts/eddy_pnl_repol.py ${eddy_command}"
+                    log_Msg "${eddy_command}"
+                    ${eddy_command}
+                    eddyReturnValue=$?
+                    log_Msg "Completed with return value: ${eddyReturnValue}"
+		fi
+
+            done
+    fi
+
+    # remove intensity normalized data
+    rm ${workingdir}/Pos_Neg.nii.gz
+
+    exit ${eddyReturnValue}
+
 }
 
 # ------------------------------------------------------------------------------
