@@ -43,7 +43,7 @@ pushd .
 cd ${workingdir}
 listpre=b0_list
 realpath hifib0.nii.gz > ${listpre}.txt
-$cnn_mask_exe -i ${listpre}.txt -f $(dirname $cnn_mask_exe)/../model_folder
+$cnn_mask_exe -i ${listpre}.txt
 # rename
 mv hifib0_bse-multi_BrainMask.nii.gz nodif_brain_mask.nii.gz
 # cleanup
