@@ -49,7 +49,6 @@ mv hifib0_bse-multi_BrainMask.nii.gz nodif_brain_mask.nii.gz
 # cleanup
 rm ${listpre}*
 rm *_cases_*
-rm -r slicesdir_multi/
 popd
 
 
