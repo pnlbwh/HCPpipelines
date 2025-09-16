@@ -318,6 +318,8 @@ main() {
 		select_flag="1"
 	fi
 	${runcmd} ${HCPPIPEDIR_dMRI}/eddy_postproc.sh ${outdir} ${GdCoeffs} ${CombineDataFlag} ${select_flag}
+    
+    exit
 
 	# Establish variables that follow naming conventions
 	T1wFolder="${StudyFolder}/${Subject}/T1w" #Location of T1w images
